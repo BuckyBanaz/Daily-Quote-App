@@ -1,5 +1,7 @@
 # Daily Quote App 📱✨
 
+[![Documentation Website](https://img.shields.io/badge/View_Documentation_Website-26A69A?style=for-the-badge&logo=googlechrome&logoColor=white)](https://buckybanaz.github.io/Daily-Quote-App/)
+
 A modern, minimal Flutter application that delivers daily inspiration with a beautiful, pixel-perfect UI.
 
 ## 🚀 Features
