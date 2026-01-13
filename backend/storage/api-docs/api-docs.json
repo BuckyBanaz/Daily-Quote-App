@@ -144,6 +144,44 @@
                 }
             }
         },
+        "/api/user/profile": {
+            "put": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Update user profile",
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jane Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jane@example.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully"
+                    }
+                }
+            }
+        },
         "/api/forgot-password": {
             "post": {
                 "tags": [
@@ -466,6 +504,42 @@
                 }
             }
         },
+        "/api/quotes/favorites": {
+            "get": {
+                "tags": [
+                    "Quotes"
+                ],
+                "summary": "Get favorited quotes",
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of favorited quotes"
+                    }
+                }
+            }
+        },
+        "/api/quotes/liked": {
+            "get": {
+                "tags": [
+                    "Quotes"
+                ],
+                "summary": "Get liked quotes",
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of liked quotes"
+                    }
+                }
+            }
+        },
         "/api/quotes/{id}": {
             "get": {
                 "tags": [
@@ -560,6 +634,122 @@
                 "responses": {
                     "200": {
                         "description": "Quote deleted successfully"
+                    }
+                }
+            }
+        },
+        "/api/quotes/{id}/favorite": {
+            "post": {
+                "tags": [
+                    "Quotes"
+                ],
+                "summary": "Favorite a quote",
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quote favorited successfully"
+                    }
+                }
+            }
+        },
+        "/api/quotes/{id}/unfavorite": {
+            "delete": {
+                "tags": [
+                    "Quotes"
+                ],
+                "summary": "Unfavorite a quote",
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quote unfavorited successfully"
+                    }
+                }
+            }
+        },
+        "/api/quotes/{id}/like": {
+            "post": {
+                "tags": [
+                    "Quotes"
+                ],
+                "summary": "Like a quote",
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quote liked successfully"
+                    }
+                }
+            }
+        },
+        "/api/quotes/{id}/unlike": {
+            "delete": {
+                "tags": [
+                    "Quotes"
+                ],
+                "summary": "Unlike a quote",
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quote unliked successfully"
                     }
                 }
             }
