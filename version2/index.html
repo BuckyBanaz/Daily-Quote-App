@@ -368,36 +368,90 @@
             margin-top: 80px;
         }
 
-        /* Responsive */
+        /* Endpoint Styling */
+        .endpoint-group {
+            margin-bottom: 40px;
+        }
+
+        .endpoint-group h3 {
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .endpoint-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .endpoint-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+
+        .endpoint-item:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-light);
+        }
+
+        .method {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            min-width: 65px;
+            text-align: center;
+            color: white;
+        }
+
+        .method.get {
+            background: #61affe;
+        }
+
+        .method.post {
+            background: #49cc90;
+        }
+
+        .method.put {
+            background: #fca130;
+        }
+
+        .method.delete {
+            background: #f93e3e;
+        }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
         @media screen and (max-width: 768px) {
-            .timeline::after {
-                left: 31px;
+            .endpoint-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
 
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-
-            .timeline-item.left {
-                text-align: left;
-            }
-
-            .timeline-item.right {
-                left: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .stats-row {
-                gap: 30px;
-            }
-
-            .nav-links {
-                display: none;
+            .desc {
+                margin-left: 0;
             }
         }
     </style>
@@ -413,6 +467,7 @@
         <div class="nav-links">
             <a href="#process">AI Workflow</a>
             <a href="#tech">Tech Stack</a>
+            <a href="#endpoints">API Endpoints</a>
             <a href="#features">Features</a>
             <a href="https://github.com/BuckyBanaz/Daily-Quote-App.git" target="_blank" class="github-btn">GitHub
                 Repo</a>
@@ -688,6 +743,117 @@
                     <li><strong>Swagger</strong>: API testing & documentation</li>
                 </ul>
             </div>
+        </div>
+    </section>
+
+    <!-- API Endpoints Section -->
+    <section id="endpoints" class="section">
+        <h2 class="section-title">Backend <span>API Endpoints</span></h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; color: #666;">
+            A robust RESTful API built with Laravel 11, featuring 20+ endpoints for complete app functionality.
+        </p>
+
+        <div class="endpoint-group">
+            <h3>🔐 Authentication</h3>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/register</span>
+                    <span class="desc">Create a new user account</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/login</span>
+                    <span class="desc">Authenticate user & get token</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/user</span>
+                    <span class="desc">Get current user profile</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method put">PUT</span>
+                    <span class="path">/api/user/profile</span>
+                    <span class="desc">Update profile information</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/forgot-password</span>
+                    <span class="desc">Trigger password reset link</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/logout</span>
+                    <span class="desc">Revoke authentication token</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="endpoint-group">
+            <h3>📚 Categories</h3>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/categories</span>
+                    <span class="desc">List all quote categories</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/categories</span>
+                    <span class="desc">Create a new category (Admin)</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/categories/{id}</span>
+                    <span class="desc">Get category details</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="endpoint-group">
+            <h3>💬 Quotes & Interactions</h3>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes</span>
+                    <span class="desc">Get quotes (Paginated, Filters)</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes/random</span>
+                    <span class="desc">Get a high-quality random quote</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes/favorites</span>
+                    <span class="desc">List user's favorited quotes</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes/liked</span>
+                    <span class="desc">List user's liked quotes</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/quotes/{id}/favorite</span>
+                    <span class="desc">Add quote to favorites</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/quotes/{id}/like</span>
+                    <span class="desc">Like a specific quote</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/api/quotes/{id}/unlike</span>
+                    <span class="desc">Remove like from quote</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="http://127.0.0.1:8000/api/documentation" target="_blank" class="github-btn"
+                style="text-decoration: none;">View Full Swagger UI →</a>
         </div>
     </section>
 
