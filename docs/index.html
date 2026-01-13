@@ -4,20 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Quotes App - Development Documentation</title>
+    <title>Daily Quotes App v2 - AI-Powered Development Journey</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
             --primary: #26A69A;
+            --primary-dark: #00897B;
             --primary-light: #E0F2F1;
             --secondary: #80CBC4;
+            --accent: #FF6B6B;
             --text-dark: #2D3142;
             --text-gray: #9E9E9E;
             --bg-light: #F8F9FA;
             --white: #FFFFFF;
             --gradient: linear-gradient(135deg, #26A69A 0%, #80CBC4 100%);
+            --gradient-warm: linear-gradient(135deg, #FF6B6B 0%, #FFB347 100%);
         }
 
         * {
@@ -31,6 +34,7 @@
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         h1,
@@ -41,9 +45,10 @@
             font-family: 'Outfit', sans-serif;
         }
 
-        /* --- Navbar --- */
+        /* Navbar */
         .navbar {
-            background-color: var(--white);
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
@@ -51,7 +56,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .logo-container {
@@ -60,22 +65,24 @@
             gap: 12px;
         }
 
-        .logo-img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
-
         .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-dark);
-            margin-left: 24px;
             font-weight: 500;
             transition: color 0.3s;
         }
@@ -93,33 +100,37 @@
             box-shadow: 0 4px 15px rgba(38, 166, 154, 0.3);
         }
 
-        /* --- Hero --- */
+        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 100px 20px;
             background: linear-gradient(180deg, var(--white) 0%, var(--bg-light) 100%);
+            position: relative;
         }
 
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 16px;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
             background: var(--gradient);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 800;
         }
 
-        .hero p {
-            font-size: 1.25rem;
+        .hero .subtitle {
+            font-size: 1.3rem;
             color: var(--text-gray);
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 700px;
+            margin: 0 auto 40px;
         }
 
         .stats-row {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
+            gap: 60px;
+            margin-top: 60px;
+            flex-wrap: wrap;
         }
 
         .stat-item {
@@ -129,7 +140,7 @@
         }
 
         .stat-val {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--text-dark);
         }
@@ -139,9 +150,25 @@
             color: var(--text-gray);
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-top: 8px;
         }
 
-        /* --- Process Timeline --- */
+        /* Showcase Section */
+        .showcase {
+            padding: 80px 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .showcase-gif {
+            max-width: 250px;
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            margin-top: 40px;
+        }
+
+        /* Section */
         .section {
             padding: 80px 5%;
             max-width: 1200px;
@@ -149,7 +176,7 @@
         }
 
         .section-title {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             text-align: center;
             margin-bottom: 60px;
         }
@@ -158,6 +185,7 @@
             color: var(--primary);
         }
 
+        /* Timeline */
         .timeline {
             position: relative;
             max-width: 1000px;
@@ -168,7 +196,7 @@
             content: '';
             position: absolute;
             width: 4px;
-            background-color: var(--primary-light);
+            background: var(--primary-light);
             top: 0;
             bottom: 0;
             left: 50%;
@@ -181,7 +209,6 @@
             position: relative;
             background-color: inherit;
             width: 50%;
-            box-sizing: border-box;
         }
 
         .timeline-item.left {
@@ -206,28 +233,18 @@
             transform: translateY(-5px);
         }
 
-        .timeline::after {
-            z-index: 0;
-        }
-
         .content h2 {
             color: var(--primary);
             margin-bottom: 12px;
             font-size: 1.5rem;
         }
 
-        .content h3 {
-            font-size: 1.1rem;
-            margin-top: 10px;
-            color: #555;
-        }
-
         .tool-badge {
             display: inline-block;
             background: var(--primary-light);
             color: var(--primary);
-            padding: 4px 12px;
-            border-radius: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 12px;
@@ -236,36 +253,44 @@
         .prompt-box {
             background-color: #2D3142;
             color: #E0E0E0;
-            padding: 16px;
-            border-radius: 8px;
+            padding: 20px;
+            border-radius: 10px;
             text-align: left;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             margin-top: 16px;
             white-space: pre-wrap;
             border-left: 4px solid var(--primary);
+            line-height: 1.8;
         }
 
-        /* --- Tech Stack --- */
+        /* Tech Stack Grid */
         .tech-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
             margin-top: 40px;
         }
 
         .tech-card {
             background: white;
-            padding: 24px;
+            padding: 30px;
             border-radius: 16px;
             border: 1px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
         }
 
         .tech-card h3 {
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.3rem;
         }
 
         .tech-list {
@@ -273,74 +298,160 @@
         }
 
         .tech-list li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
-            align-items: center;
-            gap: 8px;
+            align-items: flex-start;
+            gap: 10px;
             font-size: 0.95rem;
             color: #666;
         }
 
         .tech-list li::before {
-            content: "•";
+            content: "✓";
             color: var(--primary);
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
-        /* --- Gallery --- */
-        .gallery-grid {
+        /* Features Grid */
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 40px;
         }
 
-        .screenshot-card {
+        .feature-card {
+            background: white;
+            padding: 30px;
             border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
         }
 
-        .screenshot-card:hover {
-            transform: scale(1.02);
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .screenshot-card img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
         }
 
+        .feature-card h3 {
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Stitch Image */
         .stitch-img {
             width: 100%;
+            max-width: 900px;
             border-radius: 12px;
-            border: 1px solid #eee;
-            margin-top: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
         }
 
-        /* --- Responsive --- */
+        /* Footer */
+        footer {
+            background: #2D3142;
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        /* Endpoint Styling */
+        .endpoint-group {
+            margin-bottom: 40px;
+        }
+
+        .endpoint-group h3 {
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .endpoint-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .endpoint-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+
+        .endpoint-item:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-light);
+        }
+
+        .method {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            min-width: 65px;
+            text-align: center;
+            color: white;
+        }
+
+        .method.get {
+            background: #61affe;
+        }
+
+        .method.post {
+            background: #49cc90;
+        }
+
+        .method.put {
+            background: #fca130;
+        }
+
+        .method.delete {
+            background: #f93e3e;
+        }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-left: auto;
+        }
+
         @media screen and (max-width: 768px) {
-            .timeline::after {
-                left: 31px;
+            .endpoint-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
 
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-
-            .timeline-item.left {
-                text-align: left;
-            }
-
-            .timeline-item.right {
-                left: 0;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
+            .desc {
+                margin-left: 0;
             }
         }
     </style>
@@ -351,13 +462,13 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="logo-container">
-            <img src="logo.png" alt="Daily Quote Logo" class="logo-img">
-            <span class="logo-text">Daily Quotes App</span>
+            <span class="logo-text">📱 Daily Quotes App v2</span>
         </div>
         <div class="nav-links">
-            <a href="#process">The Process</a>
+            <a href="#process">AI Workflow</a>
             <a href="#tech">Tech Stack</a>
-            <a href="#gallery">Gallery</a>
+            <a href="#endpoints">API Endpoints</a>
+            <a href="#features">Features</a>
             <a href="https://github.com/BuckyBanaz/Daily-Quote-App.git" target="_blank" class="github-btn">GitHub
                 Repo</a>
         </div>
@@ -365,186 +476,203 @@
 
     <!-- Hero Section -->
     <header class="hero">
-        <div class="container">
-            <h1>Built with Artificial Intelligence</h1>
-            <p>A journey from prompt engineering to a production-ready Flutter application in under 60 minutes.</p>
+        <h1>Built 90% by AI in 14 Hours</h1>
+        <p class="subtitle">A production-ready Flutter + Laravel application powered by ChatGPT, Stitch, and
+            Antigravity. From ideation to deployment with minimal human intervention.</p>
 
-            <div class="stats-row">
-                <div class="stat-item">
-                    <span class="stat-val">1 Hr</span>
-                    <span class="stat-label">Development Time</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-val">3</span>
-                    <span class="stat-label">AI Tools</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-val">💯</span>
-                    <span class="stat-label">Production Ready</span>
-                </div>
+        <div class="stats-row">
+            <div class="stat-item">
+                <span class="stat-val">14 Hrs</span>
+                <span class="stat-label">Development Time</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val">90%</span>
+                <span class="stat-label">AI Contribution</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val">3</span>
+                <span class="stat-label">AI Tools Used</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-val">10%</span>
+                <span class="stat-label">Human Input</span>
             </div>
         </div>
     </header>
 
-    <!-- The Process Section -->
+    <!-- Showcase Section -->
+    <section class="showcase">
+        <h2 class="section-title">App <span>Showcase</span></h2>
+        <img src="ss.gif" alt="App Demo" class="showcase-gif">
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section" style="background: white;">
+        <h2 class="section-title">Key <span>Features</span></h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>User Authentication</h3>
+                <p>Secure login/signup with Laravel Sanctum. Email verification and password reset functionality.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Quote Categories</h3>
+                <p>Browse quotes by categories like Motivation, Love, Success, and more. Beautifully organized.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">❤️</div>
+                <h3>Favorites & Likes</h3>
+                <p>Save your favorite quotes and like the ones you love. Synced across devices via backend.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Smart Notifications</h3>
+                <p>Schedule daily quote reminders with exact alarm support. Choose time, days, and categories.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Premium UI/UX</h3>
+                <p>Glassmorphism, smooth animations, dark mode support, and pixel-perfect design.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Advanced Search</h3>
+                <p>Search quotes by content, author, or category. Lightning-fast results.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📤</div>
+                <h3>Share Quotes</h3>
+                <p>Beautiful share sheet with copy and native sharing options. Spread inspiration!</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>RESTful API</h3>
+                <p>Laravel backend with clean API architecture. Pagination, filtering, and error handling.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>MariaDB Storage</h3>
+                <p>Robust database with optimized queries and relationships. Scalable and reliable.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Workflow Section -->
     <section id="process" class="section">
-        <h2 class="section-title">The <span>Workflow</span></h2>
+        <h2 class="section-title">The AI <span>Development Workflow</span></h2>
 
         <div class="timeline">
-            <!-- Step 1 -->
+            <!-- Step 1: ChatGPT -->
             <div class="timeline-item left">
                 <div class="content">
-                    <span class="tool-badge">Step 1: ChatGPT</span>
-                    <h2>Ideation & Prompting</h2>
-                    <p>The foundation was laid by generating precise design prompts. ChatGPT helped define the UI
-                        direction, color palettes, and UX flows.</p>
+                    <span class="tool-badge">Step 1: ChatGPT for Prompts</span>
+                    <h2>🤖 Ideation & Prompt Engineering</h2>
+                    <p>ChatGPT was used to generate comprehensive design prompts for the UI/UX. These prompts defined
+                        the visual direction, user flows, and interaction patterns.</p>
 
-                    <h3>1. Foundation Design Prompt</h3>
-                    <div class="prompt-box">
-                        Design a modern, minimal Daily Quote mobile app UI.
+                    <h3 style="margin-top: 20px;">Sample Prompt: Home Screen</h3>
+                    <div class="prompt-box">Design a modern Daily Quote App home screen.
 
-                        Platform: Android & iOS (mobile-first)
-                        Style: Clean, calm, motivational, modern
-                        Color palette: Soft gradient background (light pastel tones), dark text for readability
-                        Typography: Sans-serif, clean, readable, inspirational feel
-                        Icon style: Rounded, minimal line icons
-                        Spacing: Comfortable, airy layout
-
-                        App should include:
-                        - Home screen with daily quote
-                        - Favorite quotes screen
-                        - Quote detail & share interaction
-                        - Empty states
-                        - Subtle micro-interactions
-
-                        Follow modern mobile UI/UX best practices.
-                    </div>
-
-                    <h3 style="margin-top:20px;">2. Home Screen Prompt</h3>
-                    <div class="prompt-box">
-                        Design the Home Screen of a Daily Quote App.
+                        Platform: Flutter (Android & iOS)
+                        Style: Clean, minimal, inspirational
+                        Color Palette: Teal gradient (#26A69A to #80CBC4)
 
                         Elements:
-                        - App bar with title "Daily Quote" and a heart (favorites) icon on the right
+                        - App bar with "Daily Quote" title and heart icon
                         - Centered quote card with:
-                        - Large quotation text
-                        - Author name below in smaller font
-                        - Soft card shadow and rounded corners
-                        - Background with subtle gradient
-                        - Action buttons below quote:
-                        - Favorite (heart icon)
-                        - Share (share icon)
-                        - Refresh quote (shuffle icon)
-                        - Bottom navigation bar with:
-                        - Home
-                        - Favorites
+                        - Large quote text with quotation marks
+                        - Author name below
+                        - Soft shadow and rounded corners
+                        - Action buttons: Like, Share, Refresh
+                        - Bottom navigation: Home, Categories, Favorites, Settings
 
-                        UX:
-                        - Quote should feel calm and focused
-                        - Buttons should be clearly tappable
+                        UX Requirements:
+                        - Smooth animations on quote change
                         - One-hand mobile usage friendly
-                    </div>
+                        - Loading states with shimmer effect
+                        - Dark mode support</div>
 
-                    <h3 style="margin-top:20px;">3. Favorites Screen Prompt</h3>
-                    <div class="prompt-box">
-                        Design the Favorites Screen for a Daily Quote App.
+                    <h3 style="margin-top: 20px;">Sample Prompt: Backend API</h3>
+                    <div class="prompt-box">Create a Laravel REST API for a Daily Quote App.
 
-                        Layout:
-                        - App bar with title "Favorites"
-                        - Scrollable list of saved quotes
-                        - Each quote in a rounded card with:
-                        - Quote text (2-3 lines max)
-                        - Author name
-                        - Small heart icon (filled)
-                        - Clean spacing between cards
+                        Requirements:
+                        - User authentication with Sanctum
+                        - CRUD operations for quotes
+                        - Categories management
+                        - User favorites and likes
+                        - Pagination and filtering
+                        - Email verification
+                        - Password reset functionality
 
-                        Empty State:
-                        - Illustration or icon
-                        - Text: "No favorites yet"
-                        - Subtext: "Tap the heart icon to save your favorite quotes"
-
-                        Style:
-                        - Same color palette and typography as Home Screen
-                        - Minimal and distraction-free
-                    </div>
-
-                    <h3 style="margin-top:20px;">4. Share Sheet Prompt</h3>
-                    <div class="prompt-box">
-                        Design a Share Quote Bottom Sheet.
-
-                        Components:
-                        - Drag handle at top
-                        - Preview of quote inside a card
-                        - Share options:
-                        - System Share
-                        - Copy Text
-                        - Close button
-
-                        Style:
-                        - Rounded top corners
-                        - Soft elevation
-                        - Clean and modern look
-                        - Focus on quote readability
-                    </div>
-
-                    <h3 style="margin-top:20px;">5. Loading & Empty States</h3>
-                    <div class="prompt-box">
-                        Design loading and empty states for a Daily Quote App.
-
-                        Loading State:
-                        - Minimal quote skeleton loader
-                        - Soft shimmer animation
-                        - Calm waiting experience
-
-                        Error State:
-                        - Friendly message: "Couldn't load quote"
-                        - Retry button
-
-                        Empty Favorites State:
-                        - Minimal illustration
-                        - Friendly motivational message
-                    </div>
-
-                    <h3 style="margin-top:20px;">6. Micro-Interactions (Advanced)</h3>
-                    <div class="prompt-box">
-                        Design subtle micro-interactions & animations to make the app feel alive.
-                        - Heart pulse on fav
-                        - Smooth fade on quote load
-                        - Staggered list entrance
-                    </div>
+                        Database: MariaDB
+                        Architecture: Repository pattern
+                        Response: JSON with proper status codes
+                        Security: CSRF protection, rate limiting</div>
                 </div>
             </div>
 
-            <!-- Step 2 -->
+            <!-- Step 2: Stitch -->
             <div class="timeline-item right">
                 <div class="content">
-                    <span class="tool-badge">Step 2: Google Stitch</span>
-                    <h2>Visual Design Generation</h2>
-                    <p>Using the prompts from Step 1, Google Stitch visualized the interface, creating a cohesive design
-                        system.</p>
-                    <a href="https://stitch.withgoogle.com/projects/13600829782562542051" target="_blank"
-                        style="display:block; margin-top:10px; color:var(--primary); font-weight:600;">View Project on
-                        Stitch &rarr;</a>
-                    <img src="stitch.png" alt="Stitch Design" class="stitch-img">
+                    <span class="tool-badge">Step 2: Google Stitch for Design</span>
+                    <h2>🎨 Visual Design Generation</h2>
+                    <p>Using the prompts from ChatGPT, Google Stitch transformed text descriptions into beautiful,
+                        cohesive UI designs. The tool generated pixel-perfect mockups with proper spacing, colors, and
+                        typography.</p>
+
+                    <a href="https://stitch.withgoogle.com" target="_blank"
+                        style="display:block; margin-top:10px; color:var(--primary); font-weight:600;">
+                        View Stitch Project →
+                    </a>
+
+                    <img src="image.png" alt="Stitch Design Preview" class="stitch-img">
                 </div>
             </div>
 
-            <!-- Step 3 -->
+            <!-- Step 3: Antigravity -->
             <div class="timeline-item left">
                 <div class="content">
-                    <span class="tool-badge">Step 3: Antigravity by Google</span>
-                    <h2>Intelligent Implementation</h2>
-                    <p>Finally, Antigravity (Agentic Coding AI) handled the entire coding lifecycle. From setting up the
-                        Flutter project to writing complex logic and animations.</p>
+                    <span class="tool-badge">Step 3: Antigravity for Development</span>
+                    <h2>⚡ Intelligent Code Generation</h2>
+                    <p>Antigravity (Google's Agentic AI) handled the entire development lifecycle. From setting up the
+                        Flutter project and Laravel backend to implementing complex features and fixing bugs.</p>
+
+                    <h3 style="margin-top: 20px;">Sample Antigravity Prompts</h3>
                     <div class="prompt-box" style="background: #e1f5fe; color: #0277bd; border-left-color: #0288d1;">
-                        User Request: "Use this design, implement these features (Search, Streak, Animations), and
-                        ensure pixel-perfect UI."
-                    </div>
+                        "Create a Flutter app with GetX state management. Implement user authentication, quote browsing
+                        with categories, favorites system, and notification scheduling. Use the design from Stitch."
+
+                        "Set up Laravel backend with Sanctum authentication. Create models for User, Quote, Category,
+                        Favorite, and Like. Implement RESTful API endpoints with proper validation."
+
+                        "Fix the notification permission issue on Android 12+. Handle exact alarm permission gracefully
+                        with user-friendly dialogs."
+
+                        "Implement dark mode support across the entire app. Ensure smooth theme transitions and proper
+                        color contrast."</div>
+
+                    <h3 style="margin-top: 20px;">What Antigravity Built:</h3>
                     <ul style="margin-top:15px; text-align:left; padding-left:20px;">
-                        <li>Flutter Project Setup</li>
-                        <li>State Management (GetX)</li>
-                        <li>API Integration (DummyJSON)</li>
-                        <li>Complex UI & Animations</li>
+                        <li>Flutter project setup with proper folder structure</li>
+                        <li>GetX state management implementation</li>
+                        <li>Laravel backend with MVC architecture</li>
+                        <li>Database migrations and seeders</li>
+                        <li>API integration with Dio</li>
+                        <li>Complex UI components and animations</li>
+                        <li>Notification service with permission handling</li>
+                        <li>Dark mode theming system</li>
+                        <li>Error handling and loading states</li>
+                        <li>Bug fixes and optimizations</li>
                     </ul>
                 </div>
             </div>
@@ -552,68 +680,242 @@
     </section>
 
     <!-- Tech Stack Section -->
-    <section id="tech" class="section" style="background:white;">
-        <h2 class="section-title">Tech <span>Stack & Dependencies</span></h2>
-        <p style="text-align: center; max-width: 700px; margin: 0 auto; color: #666;">
-            Antigravity curated a robust production-grade stack to ensure performance, scalability, and maintainability.
+    <section id="tech" class="section" style="background: white;">
+        <h2 class="section-title">Tech <span>Stack & Architecture</span></h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; color: #666;">
+            A production-grade stack combining Flutter's cross-platform capabilities with Laravel's robust backend
+            framework.
         </p>
 
         <div class="tech-grid">
-            <!-- Core -->
+            <!-- Frontend -->
             <div class="tech-card">
-                <h3>🛠 Core Architecture</h3>
+                <h3>📱 Frontend (Flutter)</h3>
                 <ul class="tech-list">
-                    <li><strong>Flutter SDK</strong>: Cross-platform native performance.</li>
-                    <li><strong>GetX</strong>: For high-performance State Management, Dependency Injection, and Routing.
-                    </li>
-                    <li><strong>MVVM Pattern</strong>: Clean separation of logic and UI.</li>
+                    <li><strong>Flutter SDK</strong>: Cross-platform native performance</li>
+                    <li><strong>GetX</strong>: State management, routing, dependency injection</li>
+                    <li><strong>Dio</strong>: HTTP client for API requests</li>
+                    <li><strong>Google Fonts</strong>: Outfit & Roboto typography</li>
+                    <li><strong>Flutter Local Notifications</strong>: Smart reminders</li>
+                    <li><strong>Shared Preferences</strong>: Local data persistence</li>
+                    <li><strong>Share Plus</strong>: Native sharing capabilities</li>
                 </ul>
             </div>
 
-            <!-- Data & Network -->
+            <!-- Backend -->
             <div class="tech-card">
-                <h3>📡 Data & Networking</h3>
+                <h3>🔧 Backend (Laravel)</h3>
                 <ul class="tech-list">
-                    <li><strong>Dio</strong>: Powerful HTTP client for API requests with interceptors.</li>
-                    <li><strong>DummyJSON API</strong>: Source for random quotes (with fallback logic).</li>
-                    <li><strong>Shared Preferences</strong>: Local persistence for Favorites and Calendar Streaks.</li>
+                    <li><strong>Laravel 11</strong>: Modern PHP framework</li>
+                    <li><strong>Sanctum</strong>: API authentication</li>
+                    <li><strong>Eloquent ORM</strong>: Database abstraction</li>
+                    <li><strong>MariaDB</strong>: Relational database</li>
+                    <li><strong>Mail System</strong>: Email verification & reset</li>
+                    <li><strong>Validation</strong>: Request validation layer</li>
+                    <li><strong>Migrations</strong>: Version-controlled schema</li>
                 </ul>
             </div>
 
-            <!-- UI & UX -->
+            <!-- Architecture -->
             <div class="tech-card">
-                <h3>🎨 UI & Interaction</h3>
+                <h3>🏗️ Architecture</h3>
                 <ul class="tech-list">
-                    <li><strong>Google Fonts</strong>: Outfit & Roboto for premium typography.</li>
-                    <li><strong>Shimmer</strong>: Professional skeleton loading states.</li>
-                    <li><strong>Table Calendar</strong>: Visualizing user usage streaks.</li>
-                    <li><strong>Share Plus</strong>: Native system sharing capabilities.</li>
+                    <li><strong>MVVM Pattern</strong>: Clean separation of concerns</li>
+                    <li><strong>Repository Pattern</strong>: Data abstraction layer</li>
+                    <li><strong>RESTful API</strong>: Standard HTTP methods</li>
+                    <li><strong>JWT Tokens</strong>: Secure authentication</li>
+                    <li><strong>Pagination</strong>: Efficient data loading</li>
+                    <li><strong>Error Handling</strong>: Graceful failure management</li>
+                    <li><strong>Responsive Design</strong>: Adaptive layouts</li>
+                </ul>
+            </div>
+
+            <!-- Development Tools -->
+            <div class="tech-card">
+                <h3>🛠️ Development Tools</h3>
+                <ul class="tech-list">
+                    <li><strong>ChatGPT</strong>: Prompt engineering & planning</li>
+                    <li><strong>Google Stitch</strong>: UI/UX design generation</li>
+                    <li><strong>Antigravity</strong>: Agentic code development</li>
+                    <li><strong>Git</strong>: Version control</li>
+                    <li><strong>XAMPP</strong>: Local development server</li>
+                    <li><strong>Android Studio</strong>: Mobile development IDE</li>
+                    <li><strong>Swagger</strong>: API testing & documentation</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="section">
-        <h2 class="section-title">App <span>Showcase</span></h2>
-        <div class="gallery-grid">
-            <div class="screenshot-card">
-                <img src="appss/1.png" alt="Home Screen">
+    <!-- API Endpoints Section -->
+    <section id="endpoints" class="section">
+        <h2 class="section-title">Backend <span>API Endpoints</span></h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; color: #666;">
+            A robust RESTful API built with Laravel 11, featuring 20+ endpoints for complete app functionality.
+        </p>
+
+        <div class="endpoint-group">
+            <h3>🔐 Authentication</h3>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/register</span>
+                    <span class="desc">Create a new user account</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/login</span>
+                    <span class="desc">Authenticate user & get token</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/user</span>
+                    <span class="desc">Get current user profile</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method put">PUT</span>
+                    <span class="path">/api/user/profile</span>
+                    <span class="desc">Update profile information</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/forgot-password</span>
+                    <span class="desc">Trigger password reset link</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/logout</span>
+                    <span class="desc">Revoke authentication token</span>
+                </div>
             </div>
-            <div class="screenshot-card">
-                <img src="appss/2.png" alt="Favorites Screen">
+        </div>
+
+        <div class="endpoint-group">
+            <h3>📚 Categories</h3>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/categories</span>
+                    <span class="desc">List all quote categories</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/categories</span>
+                    <span class="desc">Create a new category (Admin)</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/categories/{id}</span>
+                    <span class="desc">Get category details</span>
+                </div>
             </div>
-            <div class="screenshot-card">
-                <img src="appss/3.png" alt="Share Sheet">
+        </div>
+
+        <div class="endpoint-group">
+            <h3>💬 Quotes & Interactions</h3>
+            <div class="endpoint-list">
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes</span>
+                    <span class="desc">Get quotes (Paginated, Filters)</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes/random</span>
+                    <span class="desc">Get a high-quality random quote</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes/favorites</span>
+                    <span class="desc">List user's favorited quotes</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/quotes/liked</span>
+                    <span class="desc">List user's liked quotes</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/quotes/{id}/favorite</span>
+                    <span class="desc">Add quote to favorites</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/quotes/{id}/like</span>
+                    <span class="desc">Like a specific quote</span>
+                </div>
+                <div class="endpoint-item">
+                    <span class="method delete">DELETE</span>
+                    <span class="path">/api/quotes/{id}/unlike</span>
+                    <span class="desc">Remove like from quote</span>
+                </div>
             </div>
-            <div class="screenshot-card">
-                <img src="appss/4.png" alt="Streak View">
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="http://127.0.0.1:8000/api/documentation" target="_blank" class="github-btn"
+                style="text-decoration: none;">View Full Swagger UI →</a>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="section">
+        <h2 class="section-title">How to <span>Run the Project</span></h2>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>🔧 Backend Setup</h3>
+                <div class="prompt-box" style="background: #f5f5f5; color: #333; border-left-color: #FF6B6B;">
+                    # Navigate to backend folder
+                    cd backend
+
+                    # Install dependencies
+                    composer install
+
+                    # Copy environment file
+                    cp .env.example .env
+
+                    # Generate app key
+                    php artisan key:generate
+
+                    # Configure database in .env
+                    DB_DATABASE=daily_quotes
+                    DB_USERNAME=root
+                    DB_PASSWORD=
+
+                    # Run migrations
+                    php artisan migrate --seed
+
+                    # Start server
+                    php artisan serve --host=0.0.0.0 --port=8000</div>
+            </div>
+
+            <div class="tech-card">
+                <h3>📱 Flutter Setup</h3>
+                <div class="prompt-box" style="background: #f5f5f5; color: #333; border-left-color: #26A69A;">
+                    # Navigate to Flutter folder
+                    cd daily_quotes
+
+                    # Install dependencies
+                    flutter pub get
+
+                    # Update API endpoint in lib/constant/api_endpoints.dart
+                    # Change to your backend URL
+
+                    # Run the app
+                    flutter run
+
+                    # Or build APK
+                    flutter build apk --release</div>
             </div>
         </div>
     </section>
 
-    <footer style="background: #2D3142; color: white; padding: 40px; text-align: center; margin-top: 80px;">
-        <p>&copy; 2026 Daily Quote App. Generated by Antigravity.</p>
+    <!-- Footer -->
+    <footer>
+        <p style="font-size: 1.1rem; margin-bottom: 10px;">🚀 Daily Quotes App v2</p>
+        <p style="color: #999;">Built with 90% AI assistance in 14 hours</p>
+        <p style="margin-top: 20px; color: #666;">Powered by ChatGPT • Google Stitch • Antigravity</p>
+        <p style="margin-top: 10px; color: #555;">© 2026 - Generated by Antigravity Agent</p>
     </footer>
 
 </body>
