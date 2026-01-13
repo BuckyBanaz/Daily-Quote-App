@@ -1,16 +1,43 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../data/models/quote_model.dart';
-import '../../data/services/storage_service.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../data/models/quote_model.dart';
+import '../../data/models/category_model.dart';
+import '../../data/repo/quote_repository.dart';
+import '../share/share_bottom_sheet.dart';
 
 class FavoritesController extends GetxController {
-  final StorageService _storageService = Get.find<StorageService>();
+  final QuoteRepository _quoteRepo = QuoteRepository();
+  
   final RxList<Quote> favorites = <Quote>[].obs;
+  final RxList<Category> categories = <Category>[].obs;
+  final Rx<Category?> selectedCategory = Rx<Category?>(null);
   final RxString searchText = ''.obs;
+  final RxBool isLoading = true.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
+  Future<void> loadInitialData() async {
+    isLoading.value = true;
+    
+    // Load categories
+    final cats = await _quoteRepo.getCategories();
+    categories.assignAll(cats);
+    
+    // Load favorites
+    await loadFavorites();
+    
+    isLoading.value = false;
+  }
+
+  Future<void> loadFavorites() async {
+    final quotes = await _quoteRepo.getFavorites(categoryId: selectedCategory.value?.id);
+    print('Favorites Loaded: ${quotes.length} items');
+    favorites.assignAll(quotes);
+  }
+
+  void onCategorySelected(Category? category) {
+    selectedCategory.value = category;
+    print('Favorites - Category selected: ${category?.name ?? "All"}');
+    update(); // Force GetX to rebuild all observers
     loadFavorites();
   }
 
@@ -25,17 +52,19 @@ class FavoritesController extends GetxController {
     }).toList();
   }
 
-  void loadFavorites() {
-    favorites.value = _storageService.getFavorites();
-  }
-
-  void removeFavorite(Quote quote) {
-    favorites.remove(quote);
-    _storageService.saveFavorites(favorites);
-    update();
+  Future<void> removeFavorite(Quote quote) async {
+    // Optimistically remove from UI
+    favorites.removeWhere((q) => q.id == quote.id);
+    
+    // Remove from favorites on backend
+    await _quoteRepo.unfavoriteQuote(quote.id ?? '');
   }
 
   void shareQuote(Quote quote) {
-    Share.share('"${quote.text}" - ${quote.author}');
+    Get.bottomSheet(
+      ShareSheet(quote: quote),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+    );
   }
 }

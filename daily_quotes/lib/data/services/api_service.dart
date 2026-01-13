@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import '../models/quote_model.dart';
 
 class ApiService extends GetxService {
-  final Dio _dio = Dio();
+  final Dio _dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 30),
+    receiveTimeout: const Duration(seconds: 30),
+  ));
   // ZenQuotes (Rate Limited) -> Switched to DummyJSON for reliability
   // final String _baseUrl = 'https://zenquotes.io/api/random';
   final String _baseUrl = 'https://dummyjson.com/quotes/random';

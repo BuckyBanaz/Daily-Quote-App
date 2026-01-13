@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../constant/app_colors.dart';
 import '../home/home_view.dart';
 import '../favorites/favorites_view.dart';
+import '../categories/categories_view.dart';
+import '../settings/settings_view.dart';
 import 'dashboard_controller.dart';
 
 class DashboardView extends GetView<DashboardController> {
@@ -11,8 +13,9 @@ class DashboardView extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Stack(
         children: [
           // Content
@@ -20,7 +23,9 @@ class DashboardView extends GetView<DashboardController> {
             index: controller.tabindex.value,
             children: const [
               HomeView(),
+              CategoriesView(),
               FavoritesView(),
+              SettingsView(),
             ],
           )),
           
@@ -31,33 +36,47 @@ class DashboardView extends GetView<DashboardController> {
             right: 0,
             child: Center(
               child: Container(
-                // Smaller width for just 2 items
-                width: 180, 
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                // Increased width for 4 items
+                width: 300, 
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.cardColor.withOpacity(theme.brightness == Brightness.dark ? 0.95 : 1.0),
                   borderRadius: BorderRadius.circular(100),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.15),
-                      blurRadius: 20,
-                      offset: const Offset(0, 5),
-                      spreadRadius: 2,
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 30,
+                      offset: const Offset(0, 10),
+                      spreadRadius: -5,
                     )
                   ]
                 ),
                 child: Obx(() => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _NavIcon(
+                      context: context,
                       icon: Icons.home_rounded, 
                       isActive: controller.tabindex.value == 0, 
                       onTap: () => controller.changeTab(0),
                     ),
                     _NavIcon(
-                      icon: Icons.favorite_rounded, 
+                      context: context,
+                      icon: Icons.grid_view_rounded, 
                       isActive: controller.tabindex.value == 1, 
                       onTap: () => controller.changeTab(1),
+                    ),
+                    _NavIcon(
+                      context: context,
+                      icon: Icons.favorite_rounded, 
+                      isActive: controller.tabindex.value == 2, 
+                      onTap: () => controller.changeTab(2),
+                    ),
+                    _NavIcon(
+                      context: context,
+                      icon: Icons.settings_rounded, 
+                      isActive: controller.tabindex.value == 3, 
+                      onTap: () => controller.changeTab(3),
                     ),
                   ],
                 )),
@@ -69,14 +88,15 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  Widget _NavIcon({required IconData icon, required bool isActive, required VoidCallback onTap}) {
+  Widget _NavIcon({required BuildContext context, required IconData icon, required bool isActive, required VoidCallback onTap}) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(12),
-        decoration: isActive ? const BoxDecoration(
-          color: AppColors.primary, // Teal
+        decoration: isActive ? BoxDecoration(
+          color: theme.primaryColor,
           shape: BoxShape.circle,
         ) : const BoxDecoration(
           color: Colors.transparent,
@@ -84,7 +104,11 @@ class DashboardView extends GetView<DashboardController> {
         ),
         child: Icon(
           icon, 
-          color: isActive ? Colors.white : Colors.grey.shade400,
+          color: isActive 
+              ? Colors.white 
+              : (Theme.of(context).brightness == Brightness.dark 
+                  ? theme.hintColor.withOpacity(0.3) 
+                  : theme.hintColor.withOpacity(0.6)),
           size: 24,
         ),
       ),

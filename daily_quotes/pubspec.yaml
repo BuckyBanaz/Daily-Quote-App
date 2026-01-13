@@ -43,6 +43,10 @@ dependencies:
   intl: ^0.20.2
   table_calendar: ^3.2.0
   shimmer: ^3.0.0
+  url_launcher: ^6.3.2
+  bloc: ^9.2.0
+  flutter_local_notifications: ^19.5.0
+  timezone: ^0.10.1
 
 dev_dependencies:
   flutter_test:
