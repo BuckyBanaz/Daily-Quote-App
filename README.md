@@ -1,6 +1,6 @@
 # Daily Quote App v2 📱✨
 
-[![Documentation Website](https://img.shields.io/badge/View_Documentation_Website-26A69A?style=for-the-badge&logo=googlechrome&logoColor=white)](https://buckybanaz.github.io/Daily-Quote-App/version2/)
+[![Documentation Website](https://img.shields.io/badge/View_Documentation_Website-26A69A?style=for-the-badge&logo=googlechrome&logoColor=white)](https://buckybanaz.github.io/Daily-Quote-App/)
 
 A premium, production-ready Flutter and Laravel application built 90% via AI. It delivers daily inspiration with a beautiful design, robust backend, and intelligent notification system.
 
@@ -42,7 +42,7 @@ This project showcases the power of Agentic AI. Developed in just **14 hours**, 
 ## 📸 App Showcase
 
 <p align="center">
-  <img src="version2/ss.gif" width="250" alt="App Demo">
+  <img src="docs/ss.gif" width="250" alt="App Demo">
 </p>
 
 ## 🛠️ Setup Instructions
@@ -66,9 +66,16 @@ flutter pub get
 flutter run
 ```
 
-## 📖 Extended Documentation
 The full design workflow, prompt analysis, and technical deep-dives are available in the professional documentation hosted here:
-[**Daily Quote App v2 Documentation**](https://buckybanaz.github.io/Daily-Quote-App/version2/)
+[**Daily Quote App v2 Documentation**](https://buckybanaz.github.io/Daily-Quote-App/)
+
+## 👨‍💻 About the Developer
+**Parikshit Verma** — Mobile Application Developer (2 Years Experience)
+- **Primary Stack**: Flutter & Dart
+- **Portfolio**: [parikshit.techycodex.com](https://parikshit.techycodex.com)
+- **Philosophy**: AI-Native Engineer focusing on building production-level applications efficiently by leveraging AI tools throughout the development lifecycle.
+
+I treat AI as a collaborator to speed up development, translate requirements into functional products, and maintain clean, maintainable code.
 
 ---
 *Generated & Directed by Google Antigravity Agent*
